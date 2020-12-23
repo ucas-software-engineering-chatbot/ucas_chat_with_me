@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>中国科学院大学-高级软件工程-智能聊天机器人项目</title>
+        <meta name="description" content="登陆界面">
+        <meta name="author" content="明小明">
+        {% load static %}
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css"> -->
+        <link href="{% static 'chat_app/css/main.css' %}" rel="stylesheet">
+        <link href="{% static 'chat_app/css/font-awesome.min.css' %}" rel="stylesheet">
+        <style>
+            body {
+                background-color: #303338;
+            }
+        </style>
+        <!--if lt IE 9
+        script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+        script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+        -->
+    </head>
+    <body onload="javascript:myfunc()">
+        <div class="wrapper">
+            <header class="main-header hidden-print">
+                <a class="logo">ChatWM</a>
+                <nav class="navbar navbar-static-top">
+                    <div class="navbar-custom-menu">
+                        <ul class="top-nav">
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> Chat with smallming !</h4>
+                            </div>
+                            <hr>
+                            <div>
+                                <img src="{%static 'chat_app/image/load22.png'%}" width="400" height="400">
+                            </div>
+                            <div class="card-footer">
+                                <a href="chat" class="btn btn-success btn-block btn-lg">Get Started</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> You are beautiful !</h4>
+                            </div>
+                            <hr>
+                            <div>
+                                <img src="{%static 'chat_app/image/load33.png'%}" width="400" height="400">
+                            </div>
+                            <div class="card-footer">
+                                <a href="beautiful" class="btn btn-success btn-block btn-lg">Get Started</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> Manage your information !</h4>
+                            </div>
+                            <hr>
+                            <div>
+                                <img src="{%static 'chat_app/image/manage.png'%}" width="400" height="400">
+                            </div>
+                            <div class="card-footer">
+                                <a href="management" class="btn btn-success btn-block btn-lg">Get Started</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="{% static 'chat_app/js/jquery.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/bundle.js' %}"></script>
+    <script src="{% static 'chat_app/js/device.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/live2d.js' %}"></script>
+</html>

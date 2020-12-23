@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>中国科学院大学-高级软件工程-智能聊天机器人项目</title>
+        <meta name="description" content="登陆界面">
+        <meta name="author" content="明小明">
+        {% load static %}
+        <link href="{% static 'chat_app/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'chat_app/css/dropzone.css' %}" rel="stylesheet">
+        <link href="{% static 'chat_app/css/main.css' %}" rel="stylesheet">
+        <style>
+            body {
+                background-color: #303338;
+            }
+        </style>
+        <!--if lt IE 9
+        script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+        script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+        -->
+    </head>
+    <body onload="javascript:myfunc()">
+        <div class="wrapper">
+            <header class="main-header hidden-print">
+                <a class="logo" href="index">ChatWM</a>
+                <nav class="navbar navbar-static-top">
+                    <div class="navbar-custom-menu">
+                        <ul class="top-nav">
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> WELCOME TO MY CHANNEL!</h4>
+                            </div>
+                            <hr>
+                            <div>
+                                <div id="chat-with-me">
+                                    <div>
+                                        <canvas id="live2dcanvas" width="400" height="480" style="border:dashed 1px #CCC"></canvas>
+                                        <style>
+                                            #live2dcanvas{
+                                              width: 400;
+                                              height: 480;
+                                            }
+                                        </style>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-8 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> EVALUATE YOUR FACE</h4>
+                            </div><hr>
+                            <div class="card-body">
+                                <h3>Face Evaluation</h3>
+                                <div id="image_dropzone_1" class="dropzone needsclick dz-clickable" style="height:200px;">
+                                    <div class="dz-message needsclick">
+                                        <h2>Click to upload</h2><br>
+                                        <span class="note needsclick">Please choose a photo.</span>
+                                    </div>
+                                </div>
+                                <h3>Find Super Star</h3>
+                                <div id="image_dropzone_2" class="dropzone needsclick dz-clickable" style="height:200px;">
+                                    <div class="dz-message needsclick">
+                                        <h2>Click to upload</h2><br>
+                                        <span class="note needsclick">Please choose a photo.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="{% static 'chat_app/js/jquery.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/bundle.js' %}"></script>
+    <script src="{% static 'chat_app/js/device.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/live2d.js' %}"></script>
+    <script src="{% static 'chat_app/js/dropzone.js' %}"></script>
+    <script language="JAVASCRIPT">
+        function myfunc (){
+            var width = '400';
+            var height = '480';
+            var modelName = '33.xmas.1';
+            var headPos = '0.5';
+            var scaling = '2';
+            var opacityDefault = '0.7';
+            var opacityHover = '1';
+            var modelUrl_2="{% static 'chat_app/assets/33.xmas.1/33.xmas.1.model.json' %}";
+            document.getElementById("live2dcanvas").style.width = width + 'px';
+            document.getElementById("live2dcanvas").style.height = height + 'px';
+            console.log(modelUrl_2);
+            // 传入id, 模型path, 重心， 缩放， 默认透明， hover透明度
+            loadlive2d("live2dcanvas", modelUrl_2);
+        }
+    </script>
+    <script type="text/javascript">
+        Dropzone.autoDiscover = false;
+        var image_myDropzone_1 = new Dropzone("#image_dropzone_1", {
+            url: "http://127.0.0.1:3000/facescore",
+            method: 'post',
+            maxFiles: 1,
+            parallelUploads: 1,
+            filesizeBase: 1024,
+            addRemoveLinks: true,
+            uploadMultiple: false,
+            dictRemoveLinks: "Cancel",
+            dictCancelUpload: "Cancel",
+            paramName: "file",
+            sending: function(file, xhr, formData) {
+                formData.append("photo", file);
+                formData.append("filesize", file.size);
+                // alert(formData);
+            },
+            canceled: function(file) {
+                alert("canceled");
+                location.reload();
+            },
+            success: function (file, response, e) {
+                var data = JSON.parse(response)
+                if (parseInt(data.score) > 80) {
+                    alert("WOW!!! You got " + data.score + ". You must be an angle");
+                }
+                else{
+                    alert("WOW!!! You are beautiful, your score is " + data.score + '.');
+                }
+                location.reload();
+            },
+            error: function(file, response, e) {
+                var data = JSON.parse(response)
+                alert("EMMM... Something Wrong, the reason is " + data.reason);
+                location.reload();
+            }
+        });
+        var image_myDropzone_2 = new Dropzone("#image_dropzone_2", {
+            url: "http://127.0.0.1:3000/starface",
+            method: 'post',
+            maxFiles: 1,
+            parallelUploads: 1,
+            filesizeBase: 1024,
+            addRemoveLinks: true,
+            uploadMultiple: false,
+            dictRemoveLinks: "Cancel",
+            dictCancelUpload: "Cancel",
+            paramName: "file",
+            sending: function(file, xhr, formData) {
+                formData.append("photo", file);
+                formData.append("filesize", file.size);
+                // alert(formData);
+            },
+            canceled: function(file) {
+                alert("canceled");
+                location.reload();
+            },
+            success: function (file, response, e) {
+                var data = JSON.parse(response)
+                alert("WOO!!! Your face is similar with " + data.star_name + ".");
+                location.reload();
+            },
+            error: function(file, response, e) {
+                var data = JSON.parse(response)
+                alert(data.reason);
+                location.reload();
+            }
+        });
+    </script>
+</html>

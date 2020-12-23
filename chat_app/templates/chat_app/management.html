@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>中国科学院大学-高级软件工程-智能聊天机器人项目</title>
+        <meta name="description" content="登陆界面">
+        <meta name="author" content="明小明">
+        {% load static %}
+        <link href="{% static 'chat_app/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'chat_app/css/main.css' %}" rel="stylesheet">
+	    <script src="{% static 'chat_app/js/jquery.min.js' %}"></script>
+        <script src="{% static 'chat_app/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'chat_app/js/bundle.js' %}"></script>
+        <script src="{% static 'chat_app/js/device.min.js' %}"></script>
+        <script src="{% static 'chat_app/js/live2d.js' %}"></script>
+
+        <style>
+            body {
+                background-color: #303338;
+            }
+        </style>
+        <!--if lt IE 9
+        script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+        script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+        -->
+    </head>
+    <body onload="javascript:myfunc()">
+        <div class="wrapper">
+            <header class="main-header hidden-print">
+                <a class="logo" href="index">ChatWM</a>
+                <nav class="navbar navbar-static-top">
+                    <div class="navbar-custom-menu">
+                        <ul class="top-nav">
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> Manage your information !</h4>
+                            </div>
+                            <hr>
+                            <div>
+                                <div id="manage-your-information">
+                                    <div>
+                                        <canvas id="live2dcanvas" width="400" height="460" style="border:dashed 1px #CCC"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-8 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> MANAGE YOUR PROFILE</h4>
+                            </div>
+                            <div class="card-body">
+                                <form class="login-form" method="POST" action="management_email">
+                                    {% csrf_token %}
+                                    <div class="row mb-20">
+                                        <div class="col-md-12">
+                                            <label>Your Username</label>
+                                            <input class="form-control" name="username" type="text" disabled value="{{ username }}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-20">
+                                        <div class="col-md-12">
+                                            <label>Your First Name </label>
+                                            <input class="form-control" name="username" type="text" disabled value="{{ first_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-20">
+                                        <div class="col-md-12">
+                                            <label>Your Last Name </label>
+                                            <input class="form-control" name="username" type="text" disabled value="{{ last_name }}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-20">
+                                        <div class="col-md-12">
+                                            <label>Is superuser</label>
+                                            <input class="form-control" name="username" type="text" disabled value="{{ is_superuser }}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-20">
+                                            <label>Your Email</label>
+                                            <input class="form-control" name="email" type="email" value="{{ email }}">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-20">
+                                        <div class="col-md-4">
+                                            <button class="btn btn-primary btn-block" type="submit">
+                                                <i class="fa fa-fw fa-lg fa-check-circle"></i>Save Your Change
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="bs-element-section">
+                                <div class="row">
+                                    {% if status == 400 %}
+                                    <div class="col-lg-12">
+                                        <div class="bs-component">
+                                            <div class='alert alert-dismissible alert-warning'>
+                                                <button class="close" type="button" data-dismiss="alert">×</button>
+                                                <h4>错误！</h4>
+                                                <p>{{ data }}</p>
+                                            </div>   
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </body>
+    
+    <script language="JAVASCRIPT">
+        function myfunc (){
+            var width = '400';
+            var height = '460';
+            var modelName = 'histoire';
+            var headPos = '0.5';
+            var scaling = '2';
+            var opacityDefault = '0.7';
+            var opacityHover = '1';
+            var modelUrl_3="{% static 'chat_app/assets/histoire/histoire.model.json' %}";
+            document.getElementById("live2dcanvas").style.width = width + 'px';
+            document.getElementById("live2dcanvas").style.height = height + 'px';
+            console.log(modelUrl_3);
+            loadlive2d("live2dcanvas", modelUrl_3);
+        }
+    </script>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>中国科学院大学-高级软件工程-智能聊天机器人项目</title>
+        <meta name="description" content="登陆界面">
+        <meta name="author" content="明小明">
+        {% load static %}
+        <link href="{% static 'chat_app/css/main.css' %}" rel="stylesheet">
+        <link href="{% static 'chat_app/css/font-awesome.min.css' %}" rel="stylesheet">
+        <style>
+            body {
+                background-color: #303338;
+            }
+        </style>
+        <!--if lt IE 9
+        script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+        script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+        -->
+    </head>
+    <body>
+        <section class="login-content">
+            <div class="bs-element-section">
+                <div class="row">
+                    {% if status == 400 %}
+                    <div class="col-lg-12">
+                        <div class="bs-component">
+                            <div class='alert alert-dismissible alert-warning'>
+                                <button class="close" type="button" data-dismiss="alert">×</button>
+                                <h4>错误！</h4>
+                                <p>{{ data }}</p>
+                            </div>   
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="login-box">
+                <form class="login-form" method="POST" action="login">
+                    <!-- 随机字符串，数据提交验证机制 -->
+                    {% csrf_token %}
+                    <h3 class="login-head" style="color:white;"><i class="fa fa-user-circle fa-lg fa-fw"></i>LOGIN</h3>
+                    <div class="form-group">
+                        <label class="control-label">USERNAME</label>
+                        <input class="form-control" name="login_username" type="text" placeholder="Your Username" autofocus >
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">PASSWORD</label>
+                        <input class="form-control" name="login_password" type="password" placeholder="Your Password">
+                    </div>
+                    <hr>
+                    <div class="form-group btn-container">
+                        <button class="btn btn-default btn-block" type="submit" id="loginButton">
+                            <i class="fa fa-sign-in fa-lg fa-fw"></i>Chat With Me
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>中国科学院大学-高级软件工程-智能聊天机器人项目</title>
+        <meta name="description" content="登陆界面">
+        <meta name="author" content="明小明">
+        {% load static %}
+        <link href="{% static 'chat_app/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link href="{% static 'chat_app/css/main.css' %}" rel="stylesheet">
+        <style>
+            body {
+                background-color: #303338;
+            }
+        </style>
+        <!--if lt IE 9
+        script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+        script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
+        -->
+    </head>
+    <body onload="javascript:myfunc()">
+        <div class="wrapper">
+            <header class="main-header hidden-print">
+                <a class="logo" href="index">ChatWM</a>
+                <nav class="navbar navbar-static-top">
+                    <div class="navbar-custom-menu">
+                        <ul class="top-nav">
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> WELCOME TO MY CHANNEL!</h4>
+                            </div>
+                            <hr>
+                            <div>
+                                <div id="chat-with-me">
+                                    <div>
+                                        <canvas id="live2dcanvas" width="400" height="480" style="border:dashed 1px #CCC"></canvas>
+                                        <style>
+                                            #live2dcanvas{
+                                              width: 400;
+                                              height: 480;
+                                            }
+                                        </style>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-8 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-title text-center">
+                                <h4 class="mb-0 text-white"> CHAT WITH ME NOW </h4>
+                            </div>
+                            <hr>
+                            <div class="card-body">
+                                <div class="messanger" >
+                                    <div class="messages">
+                                        <!-- <div class="message">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div>
+                                        <div class="message me">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div>
+                                        <div class="message">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div>
+                                        <div class="message me">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div>
+                                        <div class="message">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div>
+                                        <div class="message me">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div>
+                                        <div class="message">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div>
+                                        <div class="message me">
+                                            <img src="{% static 'chat_app/image/load22-icon.png' %}">
+                                            <p class="info">Hello there!<br>Good Morning</p>
+                                        </div> -->
+                                    </div>
+                                    <div class="sender">
+                                        <input id="input_content" type="text" placeholder="Input Message" >
+                                        <button class="btn btn-primary" type="button" id="send_message" onclick="upView()">
+                                            <i class="fa fa-lg fa-fw fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="{% static 'chat_app/js/jquery.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/bundle.js' %}"></script>
+    <script src="{% static 'chat_app/js/device.min.js' %}"></script>
+    <script src="{% static 'chat_app/js/live2d.js' %}"></script>
+
+    <script language="JAVASCRIPT">
+        function myfunc (){
+            var width = '400';
+            var height = '480';
+            var modelName = '33.xmas.1';
+            var headPos = '0.5';
+            var scaling = '2';
+            var opacityDefault = '0.7';
+            var opacityHover = '1';
+            var modelUrl="{% static 'chat_app/assets/22.xmas.1/22.xmas.1.model.json' %}";
+            document.getElementById("live2dcanvas").style.width = width + 'px';
+            document.getElementById("live2dcanvas").style.height = height + 'px';
+            // modelUrl = modelUrl.replace(/name/g, modelName);
+            console.log(modelUrl);
+            // 传入id, 模型path, 重心， 缩放， 默认透明， hover透明度
+            loadlive2d("live2dcanvas", modelUrl);
+        }
+    </script>
+    <script>
+        var flag = true; // 防止连续点击提交消息
+        var response = ''; // 接收接口返回的数据
+
+        // function show(headSrc, str, className) {
+        //     var info = 'info'
+        //     str = "你也好呀！"
+        //     var html = "<div class=" + className + "><img src=" + headSrc + " />" + "<p class=" + info + ">" + str + "</p></div>";
+        //     upView(html);
+        // } 
+
+        // function show_me(headSrc, str, className) {
+        //     var info = 'info'
+        //     str = "你好"
+        //     var html = "<div class=" + className + "><img src=" + headSrc + " />" + "<p class=" + info + ">" + str + "</p></div>";
+        //     upView(html);
+        // }
+
+        function show_1() {
+            headSrc = "{% static 'chat_app/image/load22-icon.png' %}";
+            className_1 = "message me";
+            className_2 = "message";
+            info = 'info';
+            str_1 = "你好";
+            str_2 = "你也好呀！";
+            html = "<div class=" + className_1 + "><img src=" + headSrc + " />" + "<p class=" + info + ">" + str_1 + "</p></div>" + 
+            "<div class=" + className_2 + "><img src=" + headSrc + " />" + "<p class=" + info + ">" + str_2 + "</p></div>";
+            upView(html);
+        }
+        function show_2(headSrc, str, className) {
+            headSrc = "{% static 'chat_app/image/load22-icon.png' %}"
+            className = "message"
+            info = 'info'
+            str = "你也好呀！"
+            var html = "<div class=" + className + "><img src=" + headSrc + " />" + "<p class=" + info + ">" + str + "</p></div>";
+            upView(html);
+        }
+        function upView() {
+            var className_1 = "message me";
+            var className_2 = "message";
+            var info = 'info';
+            var str_1 = "你好";
+            var str_2 = "你也好呀！";
+            // $('.messages').append(html);
+            var html_1 = "<div class=" + className_1 + "><img src=" + headSrc + " />" + "<p class=" + info + ">" + str_1 + "</p></div>";
+            var html_2 = "<div class=" + className_2 + "><img src=" + headSrc + " />" + "<p class=" + info + ">" + str_2 + "</p></div>";
+            // upView(html);
+            $('.messages').append(html_1);
+            $('.messages').append(html_2);
+            // $('body,html').animate({
+            //     scrollTop: $('.message me').outerHeight() - window.innerHeight
+            // }, 200); // 自动将页面移动到最底部
+            // $("body").animate({scrollTop:top})不被Firefox支持,而被chrome支持
+            // $("html").animate({scrollTop:top})而被chrome支持,而被Firefox支持
+        }
+
+        function send_message(){
+            var message = $("#input_content").val()
+            if (message == '') {
+                return;
+            }
+            if (flag) {
+                flag = false;
+                show_me("{% static 'chat_app/image/load22-icon.png' %}", message, "message me");
+
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json;charset=UTF-8",
+                    crossDomain: true,
+                    dataType: "json",
+                    async: true,
+                    url: "http://127.0.0.1:8888/api/chatbot",
+                    data: {
+                        infos: message,
+                    },
+                    success: function (resp) {
+                        response = JSON.parse(resp);
+                        alert(response);
+                    },
+                    error: function (err) {
+                        // alert("Error in chat server.");
+                        flag = true;
+                        message = data.responseText
+                            setTimeout(function () {
+                                // show("{% static 'chat_app/image/load22-icon.png' %}", message, "message");
+                                show_1();
+                            show_2();
+                            }, 500);
+                        location.reload();
+                    },
+                    complete: function (data) {
+                        flag = true;
+                        message = data.responseText
+                            setTimeout(function () {
+                                show("{% static 'chat_app/image/load22-icon.png' %}", message, "message");
+                            }, 500);
+                    }
+                })
+            }
+        }
+        // function getMessage() {
+        //     var val = $('#inputVal').val();
+        //     if (val == '')
+        //         return;
+        //     if (flag) {
+        //         flag = false;
+
+        //         show("./chatImages/woman.png", $(".footer input").val(), "show");
+        //         // 替换为各自的接口地址
+        //         var url = "http://127.0.0.1:8888/api/chatbot";
+                
+        //         $(".footer input").val("").next().css('background', '#ddd'); //清空input
+        //         $.ajax({
+        //             type: "get",
+        //             dataType: "json",
+        //             async: true,
+        //             url: url,
+        //             data: {
+        //                 infos: val,
+        //             },
+        //             complete: function (data) {
+        //                 flag = true;
+        //                 message = data.responseText
+        //                 setTimeout(function () {
+        //                     show("chatImages/man.png", message, "send");
+        //                 }, 500);
+        //             }
+        //         });
+        //     }
+	    // }
+    </script>
+</html>
